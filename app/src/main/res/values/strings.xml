@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Yera Music</string>
+    <string name="shuffle_btn">Shuffle</string>
+    <string name="favorites_btn">Favorites</string>
+    <string name="playlist_btn">Playlist</string>
+    <string name="total_number_of_music">Total Songs</string>
+
+</resources>
