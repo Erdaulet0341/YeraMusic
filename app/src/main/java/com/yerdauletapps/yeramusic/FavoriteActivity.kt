@@ -2,15 +2,15 @@ package com.yerdauletapps.yeramusic
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.yerdauletapps.yeramusic.databinding.ActivityPlayerBinding
+import com.yerdauletapps.yeramusic.databinding.ActivityFavotireBinding
 
-class PlayerActivity : AppCompatActivity() {
+class FavoriteActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPlayerBinding
+    private lateinit var binding: ActivityFavotireBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_YeraMusic)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
+        binding = ActivityFavotireBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }
