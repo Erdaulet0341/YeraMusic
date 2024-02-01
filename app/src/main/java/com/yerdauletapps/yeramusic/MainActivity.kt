@@ -3,6 +3,7 @@ package com.yerdauletapps.yeramusic
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -137,7 +138,8 @@ class MainActivity : AppCompatActivity() {
             MediaStore.Audio.Media.ARTIST,
             MediaStore.Audio.Media.DURATION,
             MediaStore.Audio.Media.DATE_ADDED,
-            MediaStore.Audio.Media.DATA
+            MediaStore.Audio.Media.DATA,
+            MediaStore.Audio.Media.ALBUM_ID
         )
         val cursor = this.contentResolver.query(
             MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
@@ -157,11 +159,16 @@ class MainActivity : AppCompatActivity() {
                     val artistX = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
                     val timeX = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION))
                     val pathX = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA))
-
-                    val music = Music(idX, titleX, albumX, artistX, timeX, pathX)
-                    val file = File(music.path)
-                    if(file.exists()){
-                        tempList.add(music)
+                    val albumidX = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID)).toString()
+                    val uri = Uri.parse("content://media/external/audio/albumart")
+                    val artUriX = Uri.withAppendedPath(uri, albumidX).toString()
+                    val music = Music(idX, titleX, albumX, artistX, timeX, pathX, artUriX)
+                    // Check if the file extension is mp3
+                    if (pathX.endsWith(".mp3", ignoreCase = true)) {
+                        val file = File(music.path)
+                        if (file.exists()) {
+                            tempList.add(music)
+                        }
                     }
                 }while (cursor.moveToNext())
                 cursor.close()
