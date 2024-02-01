@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="170dp"
     android:padding="16dp"
-    android:background="@color/cool_pink"
+    android:background="@color/cool_blue"
     android:orientation="vertical"
-    android:layout_marginTop="90dp">
+    android:layout_marginTop="80dp">
 
     <ImageView
         android:layout_width="80dp"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:text="@string/nav_text"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
