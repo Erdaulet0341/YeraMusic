@@ -16,7 +16,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
     private lateinit var binding: ActivityPlayerBinding
 
     companion object{
-        private lateinit var listMusicPA: ArrayList<Music>
+        lateinit var listMusicPA: ArrayList<Music>
         var musicPosition: Int = 0
         var isPlay:Boolean = false
         var musicService:MusicService? = null
@@ -126,6 +126,7 @@ class PlayerActivity : AppCompatActivity(), ServiceConnection {
         val binder = p1 as MusicService.MyBinder
         musicService = binder.currentService()
         createMediaPlayer()
+        musicService!!.showNotification()
     }
 
     override fun onServiceDisconnected(p0: ComponentName?) {
