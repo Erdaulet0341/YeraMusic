@@ -27,10 +27,20 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.coolBlueNav)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        toggle = ActionBarDrawerToggle(this, binding.root, R.string.open, R.string.close)
+        binding.root.addDrawerListener(toggle)
+        toggle.syncState()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        if(requestRuntimePermission())
         initialLayout()
 
         binding.shuffleBtn.setOnClickListener {
             val intent = Intent(this, PlayerActivity::class.java)
+            intent.putExtra("index", 0)
+            intent.putExtra("class", "MainActivity")
             startActivity(intent)
         }
 
@@ -64,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun requestRuntimePermission() {
+    private fun requestRuntimePermission():Boolean {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -75,8 +85,9 @@ class MainActivity : AppCompatActivity() {
                 arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 13
             )
-
+            return false
         }
+        return true
     }
 
     override fun onRequestPermissionsResult(
@@ -88,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         if(requestCode == 13){
             if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(this, "Permission granted", Toast.LENGTH_SHORT).show()
-            }
+                initialLayout()       }
             else{
                 ActivityCompat.requestPermissions(
                     this,
@@ -106,15 +117,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun initialLayout(){
-        requestRuntimePermission()
-        setTheme(R.style.coolBlueNav)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        toggle = ActionBarDrawerToggle(this, binding.root, R.string.open, R.string.close)
-        binding.root.addDrawerListener(toggle)
-        toggle.syncState()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         MusicListMA = getAllAudio()
 
         binding.recyclerMusic.setHasFixedSize(true)
